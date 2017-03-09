@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.bicos.myopendiary.splash.SplashViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="My Open Diary"
+            android:textColor="#333333"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:id="@+id/container_input_id_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin"
+            android:animateLayoutChanges="true"
+            android:visibility="@{viewModel.login ? View.GONE : View.VISIBLE}">
+
+            <EditText
+                android:id="@+id/input_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="아이디를 입력해주세요."
+                android:inputType="textEmailAddress"
+                android:onTextChanged="@{(id,s,e,c) -> viewModel.setId(id)}" />
+
+            <EditText
+                android:id="@+id/input_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="패스워드를 입력해주세요."
+                android:inputType="textPassword"
+                android:onTextChanged="@{(pwd,s,e,c) -> viewModel.setPwd(pwd)}"/>
+
+            <Button
+                android:text="로그인"
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view) -> viewModel.clickLoginBtn()}"/>
+
+            <Button
+                android:text="회원가입"
+                android:id="@+id/btn_signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view) -> viewModel.clickSignUpBtn()}"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
+

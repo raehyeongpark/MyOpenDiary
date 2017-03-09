@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "682140569535",
+    "firebase_url": "https://myopendiary-fca1e.firebaseio.com",
+    "project_id": "myopendiary-fca1e",
+    "storage_bucket": "myopendiary-fca1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682140569535:android:3eaf68be85fedc93",
+        "android_client_info": {
+          "package_name": "com.bicos.myopendiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682140569535-cg21kmd6cg2md1kkgj1hqupjat06s5q0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bicos.myopendiary",
+            "certificate_hash": "b4c0cd5cf9369041861b961463a5521c27a65588"
+          }
+        },
+        {
+          "client_id": "682140569535-9uv0mfgdgi7tnann5pt2qp662i1jdtp3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5kE6Dc_Q4d9KcusSIoIWiMwPujpCvRfU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682140569535-9uv0mfgdgi7tnann5pt2qp662i1jdtp3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
