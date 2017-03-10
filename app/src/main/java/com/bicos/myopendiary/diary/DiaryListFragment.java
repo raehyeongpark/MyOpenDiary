@@ -59,9 +59,15 @@ public class DiaryListFragment extends Fragment {
                 DiaryViewHolder.class,
                 ref.child(Constants.REF_DIARY).child(DateUtils.today())) {
             @Override
-            protected void populateViewHolder(DiaryViewHolder viewHolder, Diary model, int position) {
+            protected void populateViewHolder(DiaryViewHolder viewHolder, final Diary model, int position) {
                 viewHolder.title.setText(model.getTitle());
                 viewHolder.desc.setText(model.getDesc());
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DetailDiaryActivity.startDetailDiaryActivityWithAnim(getActivity(), model, v);
+                    }
+                });
             }
         };
         recyclerView.setAdapter(mAdapter);
