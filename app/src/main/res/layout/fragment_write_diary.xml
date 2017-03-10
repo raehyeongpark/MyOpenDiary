@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bicos.myopendiary.diary.WriteDiaryViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scrollview_diary_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_write"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/activity_horizontal_margin">
+
+                    <EditText
+                        android:id="@+id/tv_title"
+                        android:onTextChanged="@{(title, a,b,c) -> viewModel.inputTitle(title)}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:hint="제목을 입력하세요" />
+
+                    <EditText
+                        android:id="@+id/tv_desc"
+                        android:onTextChanged="@{(desc, a,b,c) -> viewModel.inputDesc(desc)}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_title"
+                        android:hint="내용을 입력하세요"
+                        android:inputType="textLongMessage" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btn_write"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="write diary"
+            android:onClick="@{(view) -> viewModel.clickWriteDiary()}"/>
+
+    </RelativeLayout>
+</layout>
+
+

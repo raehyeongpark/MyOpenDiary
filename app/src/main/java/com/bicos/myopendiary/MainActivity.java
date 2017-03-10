@@ -1,5 +1,6 @@
 package com.bicos.myopendiary;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.View;
 
 import com.bicos.myopendiary.common.Constants;
 import com.bicos.myopendiary.diary.DiaryListFragment;
+import com.bicos.myopendiary.diary.WriteDiaryActivity;
+import com.bicos.myopendiary.diary.WriteDiaryFragment;
 import com.bicos.myopendiary.diary.data.Diary;
 import com.bicos.myopendiary.sidemenu.SideMenuFragment;
 import com.bicos.myopendiary.util.ActivityUtils;
@@ -50,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(Constants.REF_DIARY).child(DateUtils.today());
-                Diary diary = new Diary("타이틀" , "테스트입니다" , FirebaseAuth.getInstance().getCurrentUser().getUid());
-                reference.push().setValue(diary);
+                startActivity(new Intent(MainActivity.this, WriteDiaryActivity.class));
             }
         });
     }
