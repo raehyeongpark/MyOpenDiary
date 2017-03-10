@@ -21,6 +21,7 @@
 
         <activity android:name=".diary.WriteDiaryActivity" />
         <activity android:name=".diary.DetailDiaryActivity" />
+        <activity android:name=".diary.ModifyDiaryActivity" />
 
     </application>
 

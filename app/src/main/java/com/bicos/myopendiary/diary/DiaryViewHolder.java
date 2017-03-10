@@ -13,7 +13,6 @@ import com.bicos.myopendiary.R;
 public class DiaryViewHolder extends RecyclerView.ViewHolder {
 
     TextView title;
-
     TextView desc;
 
     public DiaryViewHolder(View itemView) {
