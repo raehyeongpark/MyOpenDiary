@@ -3,6 +3,7 @@ package com.bicos.myopendiary;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -12,21 +13,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.bicos.myopendiary.common.Constants;
-import com.bicos.myopendiary.diary.DiaryListFragment;
+import com.bicos.myopendiary.diary.DiaryListPagerFragment;
 import com.bicos.myopendiary.diary.WriteDiaryActivity;
-import com.bicos.myopendiary.diary.WriteDiaryFragment;
-import com.bicos.myopendiary.diary.data.Diary;
+import com.bicos.myopendiary.diary.data.Category;
 import com.bicos.myopendiary.sidemenu.SideMenuFragment;
 import com.bicos.myopendiary.util.ActivityUtils;
-import com.bicos.myopendiary.util.DateUtils;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
 
     private ActionBarDrawerToggle mToggle;
+
+    private FirebaseAuth auth;
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        if (firebaseAuth.getCurrentUser() != null) {
+            // main setting
+            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
+                    DiaryListPagerFragment.newInstance(new Category("나", firebaseAuth.getCurrentUser().getUid())),
+                    R.id.container_main);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +54,6 @@ public class MainActivity extends AppCompatActivity {
         mToggle = new ActionBarDrawerToggle(this, layout, R.string.drawer_open, R.string.drawer_close);
         layout.addDrawerListener(mToggle);
 
-        // main setting
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), DiaryListFragment.newInstance(), R.id.container_main);
-
         FloatingActionButton button = (FloatingActionButton) findViewById(R.id.btn_add);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, WriteDiaryActivity.class));
             }
         });
+
+        FirebaseAuth.getInstance().addAuthStateListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        FirebaseAuth.getInstance().removeAuthStateListener(this);
+        super.onDestroy();
     }
 
     @Override
@@ -78,5 +91,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

@@ -13,7 +13,7 @@ public class FirebaseWrapper {
         return FirebaseDatabase.getInstance().getReference().child(Constants.REF_DIARY);
     }
 
-    public static DatabaseReference getDiaryReference(String date) {
-        return FirebaseDatabase.getInstance().getReference().child(Constants.REF_DIARY).child(date);
+    public static DatabaseReference getDiaryReference(String category, String date) {
+        return FirebaseDatabase.getInstance().getReference().child(Constants.REF_DIARY).child(category).child(date);
     }
 }

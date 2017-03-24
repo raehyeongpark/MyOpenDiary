@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.common.Constants;
+import com.bicos.myopendiary.diary.data.Category;
 import com.bicos.myopendiary.diary.data.Diary;
 import com.bicos.myopendiary.util.DateUtils;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -26,9 +27,10 @@ public class DiaryListFragment extends Fragment {
     public DiaryListFragment() {
     }
 
-    public static DiaryListFragment newInstance() {
+    public static DiaryListFragment newInstance(Category category) {
 
         Bundle args = new Bundle();
+        args.putParcelable("category", category);
 
         DiaryListFragment fragment = new DiaryListFragment();
         fragment.setArguments(args);
@@ -37,6 +39,7 @@ public class DiaryListFragment extends Fragment {
 
     FirebaseRecyclerAdapter<Diary, DiaryViewHolder> mAdapter;
 
+    private Category category;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,9 +50,15 @@ public class DiaryListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        this.category = getArguments().getParcelable("category");
+
         View view = inflater.inflate(R.layout.fragment_diary_list, container, false);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(Constants.REF_DIARY)
+                .child(category.value)
+                .child(DateUtils.today());
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_diary);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -57,7 +66,7 @@ public class DiaryListFragment extends Fragment {
         mAdapter = new FirebaseRecyclerAdapter<Diary, DiaryViewHolder>(Diary.class,
                 R.layout.item_diray_list,
                 DiaryViewHolder.class,
-                ref.child(Constants.REF_DIARY).child(DateUtils.today())) {
+                ref) {
             @Override
             protected void populateViewHolder(DiaryViewHolder viewHolder, final Diary model, final int position) {
                 viewHolder.title.setText(model.getTitle());
@@ -65,8 +74,10 @@ public class DiaryListFragment extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        DetailDiaryActivity.startDetailDiaryActivityWithAnim(getActivity(), model, v);
-                        ModifyDiaryActivity.startModifyDiaryActivityWithAnim(getActivity(),getRef(position).getKey() , v);
+                        ModifyDiaryActivity.startModifyDiaryActivityWithAnim(getActivity(),
+                                category,
+                                getRef(position).getKey(),
+                                v);
                     }
                 });
             }

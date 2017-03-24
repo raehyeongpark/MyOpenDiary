@@ -1,11 +1,9 @@
 package com.bicos.myopendiary.diary;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +12,7 @@ import android.widget.Toast;
 
 import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.databinding.ActivityModifyDiaryBinding;
+import com.bicos.myopendiary.diary.data.Category;
 import com.bicos.myopendiary.diary.data.Diary;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 public class ModifyDiaryActivity extends AppCompatActivity implements ValueEventListener, ModifyDiaryContract.View {
 
     private static final String EXTRA_DIARY_KEY = "diary_key";
+    private static final String EXTRA_CATEGORY = "category";
 
     public static final String TRANSITION_NAME_DIARY_CONTAINER = "diary_container";
 
@@ -45,8 +45,9 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ValueEvent
 
         mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_modify_diary);
 
+        String category = intent.getStringExtra(EXTRA_CATEGORY);
         String diaryKey = intent.getStringExtra(EXTRA_DIARY_KEY);
-        mRequest = new ModifyDiaryRequest(diaryKey);
+        mRequest = new ModifyDiaryRequest(category, diaryKey);
 
         mRequest.requestDiary(this);
     }
@@ -73,8 +74,9 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ValueEvent
         Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
-    public static void startModifyDiaryActivityWithAnim(Activity activity, String key, View container) {
+    public static void startModifyDiaryActivityWithAnim(Activity activity, Category category, String key, View container) {
         Intent intent = new Intent(activity, ModifyDiaryActivity.class);
+        intent.putExtra(EXTRA_CATEGORY, category.value);
         intent.putExtra(EXTRA_DIARY_KEY, key);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP && container != null) {

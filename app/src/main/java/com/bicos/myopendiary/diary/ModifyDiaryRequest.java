@@ -20,10 +20,13 @@ public class ModifyDiaryRequest implements ModifyDiaryContract.Request {
 
     private DatabaseReference mRef;
 
+    private String mCategory;
+
     private String mKey;
 
-    public ModifyDiaryRequest(String key) {
-        mRef = FirebaseWrapper.getDiaryReference(DateUtils.today());
+    public ModifyDiaryRequest(String category, String key) {
+        mRef = FirebaseWrapper.getDiaryReference(category, DateUtils.today());
+        mCategory = category;
         mKey = key;
     }
 

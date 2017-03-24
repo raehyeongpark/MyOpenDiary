@@ -2,11 +2,10 @@ package com.bicos.myopendiary.diary;
 
 import android.app.Activity;
 import android.databinding.BaseObservable;
-import android.support.annotation.NonNull;
 
 import com.bicos.myopendiary.diary.data.Diary;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 
 /**
  * Created by raehyeong.park on 2017. 3. 9..
@@ -44,13 +43,14 @@ public class WriteDiaryViewModel extends BaseObservable {
     }
 
     public void clickWriteDiary() {
-        mRequest.requestWriteDiary(mDiary, mActivity, new OnCompleteListener<Void>() {
+        mRequest.requestWriteDiary(mDiary,true, mActivity, new DatabaseReference.CompletionListener() {
+
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError == null) {
                     mView.successWriteDiary();
                 } else {
-                    mView.failureWriteDiary(task.getException());
+                    mView.failureWriteDiary(databaseError.toException());
                 }
             }
         });
