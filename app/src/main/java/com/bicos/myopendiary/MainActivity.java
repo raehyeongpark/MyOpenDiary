@@ -19,22 +19,11 @@ import com.bicos.myopendiary.diary.data.Category;
 import com.bicos.myopendiary.sidemenu.SideMenuFragment;
 import com.bicos.myopendiary.util.ActivityUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
+public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle mToggle;
-
-    private FirebaseAuth auth;
-
-    @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        if (firebaseAuth.getCurrentUser() != null) {
-            // main setting
-            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-                    DiaryListPagerFragment.newInstance(new Category("나", firebaseAuth.getCurrentUser().getUid())),
-                    R.id.container_main);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +51,18 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
             }
         });
 
-        FirebaseAuth.getInstance().addAuthStateListener(this);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            // main setting
+            ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
+                    DiaryListPagerFragment.newInstance(new Category("나", user.getUid())),
+                    R.id.container_main);
+        }
     }
 
     @Override
     protected void onDestroy() {
-        FirebaseAuth.getInstance().removeAuthStateListener(this);
         super.onDestroy();
     }
 
