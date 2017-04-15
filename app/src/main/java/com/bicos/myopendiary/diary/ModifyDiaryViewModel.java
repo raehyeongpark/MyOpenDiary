@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.databinding.BaseObservable;
 import android.support.annotation.NonNull;
 
-import com.bicos.myopendiary.diary.data.Diary;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -14,16 +13,13 @@ import com.google.android.gms.tasks.Task;
 
 public class ModifyDiaryViewModel extends BaseObservable {
 
-    private Diary mDiary;
-
     private Activity mActivity;
 
     private ModifyDiaryContract.View mView;
 
     private ModifyDiaryContract.Request mRequest;
 
-    public ModifyDiaryViewModel(Activity activity, ModifyDiaryContract.View view, ModifyDiaryContract.Request request, Diary diary) {
-        mDiary = diary;
+    public ModifyDiaryViewModel(Activity activity, ModifyDiaryContract.View view, ModifyDiaryContract.Request request) {
         mActivity = activity;
         mView = view;
         mRequest = request;
@@ -33,26 +29,26 @@ public class ModifyDiaryViewModel extends BaseObservable {
         if (title == null)
             return;
 
-        mDiary.setTitle(title.toString());
+        mRequest.setTitle(title.toString());
     }
 
     public void inputDesc(CharSequence desc) {
         if (desc == null)
             return;
 
-        mDiary.setDesc(desc.toString());
+        mRequest.setDesc(desc.toString());
     }
 
     public String getTitle() {
-        return mDiary.getTitle();
+        return mRequest.getTitle();
     }
 
     public String getDesc(){
-        return mDiary.getDesc();
+        return mRequest.getDesc();
     }
 
     public void clickModifyDiary() {
-        mRequest.requestModifyDiary(mDiary, mActivity, new OnCompleteListener<Void>() {
+        mRequest.requestModifyDiary(mActivity, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -60,6 +56,33 @@ public class ModifyDiaryViewModel extends BaseObservable {
                 } else {
                     mView.failureModifyDiary(task.getException());
                 }
+            }
+        });
+    }
+
+    public void clickDeleteDiary() {
+        mRequest.requestDeleteDiary(mActivity, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    mView.successDeleteDiary();
+                } else {
+                    mView.failureModifyDiary(task.getException());
+                }
+            }
+        });
+    }
+
+    public void onStart() {
+        mRequest.requestDiary(new ModifyDiaryRequest.DataChangedListener() {
+            @Override
+            public void onDataChanged() {
+                notifyChange();
+            }
+
+            @Override
+            public void onCanceled(Exception e) {
+                mView.failureModifyDiary(e);
             }
         });
     }
