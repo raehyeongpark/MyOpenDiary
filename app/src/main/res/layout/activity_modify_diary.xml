@@ -26,6 +26,7 @@
 
                 <EditText
                     android:id="@+id/tv_title"
+                    style="@style/Base.TextAppearance.AppCompat.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -35,10 +36,10 @@
 
                 <EditText
                     android:id="@+id/tv_desc"
+                    style="@style/Base.TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/tv_title"
-                    android:gravity="top"
                     android:hint="@string/hint_input_desc"
                     android:inputType="textMultiLine"
                     android:onTextChanged="@{(desc, a,b,c) -> viewModel.inputDesc(desc)}"

@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import com.bicos.myopendiary.common.Constants;
 import com.bicos.myopendiary.diary.data.Diary;
 import com.bicos.myopendiary.util.DateUtils;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;

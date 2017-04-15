@@ -8,7 +8,6 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by raehyeong.park on 2017. 3. 8..

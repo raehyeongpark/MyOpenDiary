@@ -37,7 +37,7 @@ public class DiaryListFragment extends Fragment {
         return fragment;
     }
 
-    FirebaseRecyclerAdapter<Diary, DiaryViewHolder> mAdapter;
+    private FirebaseRecyclerAdapter<Diary, DiaryViewHolder> mAdapter;
 
     private Category category;
 

@@ -6,4 +6,6 @@
     <string name="hint_input_title">제목을 입력하세요</string>
     <string name="hint_input_desc">내용을 입력하세요</string>
     <string name="btn_modify_diary">modify diary</string>
+    <string name="toast_diary_modify_success">일기를 수정하였습니다.</string>
+    <string name="toast_diary_delete_success">일기를 삭제하였습니다.</string>
 </resources>

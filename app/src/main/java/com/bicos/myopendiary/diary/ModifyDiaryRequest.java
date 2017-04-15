@@ -22,15 +22,12 @@ public class ModifyDiaryRequest implements ModifyDiaryContract.Request {
 
     private DatabaseReference mRef;
 
-    private String mCategory;
-
     private String mKey;
 
     private Diary mDiary;
 
     public ModifyDiaryRequest(String category, String key) {
         mRef = FirebaseWrapper.getDiaryReference(category, DateUtils.today());
-        mCategory = category;
         mKey = key;
     }
 
@@ -88,6 +85,7 @@ public class ModifyDiaryRequest implements ModifyDiaryContract.Request {
 
     public interface DataChangedListener {
         void onDataChanged();
+
         void onCanceled(Exception e);
     }
 }

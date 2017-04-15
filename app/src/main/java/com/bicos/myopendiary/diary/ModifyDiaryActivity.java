@@ -25,6 +25,7 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
 
     private static final String EXTRA_DIARY_KEY = "diary_key";
     private static final String EXTRA_CATEGORY = "category";
+    private static final String EXTRA_DIARY = "diary";
 
     public static final String TRANSITION_NAME_DIARY_CONTAINER = "diary_container";
 
@@ -44,27 +45,27 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
 
         String category = intent.getStringExtra(EXTRA_CATEGORY);
         String diaryKey = intent.getStringExtra(EXTRA_DIARY_KEY);
-        ModifyDiaryRequest request = new ModifyDiaryRequest(diaryKey);
-        mViewModel = new ModifyDiaryViewModel(this, this, request);
 
+        ModifyDiaryRequest request = new ModifyDiaryRequest(category, diaryKey);
+        mViewModel = new ModifyDiaryViewModel(this, this, request);
         mDataBinding.setViewModel(mViewModel);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         mViewModel.onStart();
     }
 
     @Override
     public void successModifyDiary() {
-        Toast.makeText(getApplicationContext(), "일기를 수정하였습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.toast_diary_modify_success, Toast.LENGTH_SHORT).show();
         finish();
     }
 
     @Override
     public void successDeleteDiary() {
-        Toast.makeText(getApplicationContext(), "일기를 삭제하였습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.toast_diary_delete_success, Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -73,7 +74,6 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
         Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
-    public static void startModifyDiaryActivityWithAnim(Activity activity, Category category, String key, View container) {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_modify, menu);
@@ -93,7 +93,7 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
         }
     }
 
-    public static void startModifyDiaryActivityWithAnim(Activity activity, String key, View container) {
+    public static void startModifyDiaryActivityWithAnim(Activity activity, Category category, String key, View container) {
         Intent intent = new Intent(activity, ModifyDiaryActivity.class);
         intent.putExtra(EXTRA_CATEGORY, category.value);
         intent.putExtra(EXTRA_DIARY_KEY, key);

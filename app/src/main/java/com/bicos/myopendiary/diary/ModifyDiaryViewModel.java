@@ -2,6 +2,7 @@ package com.bicos.myopendiary.diary;
 
 import android.app.Activity;
 import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,10 +40,12 @@ public class ModifyDiaryViewModel extends BaseObservable {
         mRequest.setDesc(desc.toString());
     }
 
+    @Bindable
     public String getTitle() {
         return mRequest.getTitle();
     }
 
+    @Bindable
     public String getDesc(){
         return mRequest.getDesc();
     }
