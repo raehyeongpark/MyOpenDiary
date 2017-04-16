@@ -67,19 +67,17 @@ public class DiaryListFragment extends Fragment {
                 R.layout.item_diray_list,
                 DiaryViewHolder.class,
                 ref) {
+
             @Override
-            protected void populateViewHolder(DiaryViewHolder viewHolder, final Diary model, final int position) {
-                viewHolder.title.setText(model.getTitle());
-                viewHolder.desc.setText(model.getDesc());
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ModifyDiaryActivity.startModifyDiaryActivityWithAnim(getActivity(),
-                                category,
-                                getRef(position).getKey(),
-                                v);
-                    }
-                });
+            public DiaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                DiaryViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+                viewHolder.setCategory(category);
+                return viewHolder;
+            }
+
+            @Override
+            protected void populateViewHolder(DiaryViewHolder viewHolder, final Diary model, int position) {
+                viewHolder.populateViewHolder(model, getRef(position).getKey());
             }
         };
         recyclerView.setAdapter(mAdapter);
