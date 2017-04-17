@@ -25,7 +25,7 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
 
     private static final String EXTRA_DIARY_KEY = "diary_key";
     private static final String EXTRA_CATEGORY = "category";
-    private static final String EXTRA_DIARY = "diary";
+    private static final String EXTRA_DATE = "date";
 
     public static final String TRANSITION_NAME_DIARY_CONTAINER = "diary_container";
 
@@ -37,7 +37,7 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
 
         Intent intent = getIntent();
 
-        if (intent == null || !intent.hasExtra(EXTRA_DIARY_KEY)) {
+        if (intent == null || !intent.hasExtra(EXTRA_DIARY_KEY) || !intent.hasExtra(EXTRA_CATEGORY) || !intent.hasExtra(EXTRA_DATE)) {
             return;
         }
 
@@ -45,8 +45,9 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
 
         String category = intent.getStringExtra(EXTRA_CATEGORY);
         String diaryKey = intent.getStringExtra(EXTRA_DIARY_KEY);
+        String date = intent.getStringExtra(EXTRA_DATE);
 
-        ModifyDiaryRequest request = new ModifyDiaryRequest(category, diaryKey);
+        ModifyDiaryRequest request = new ModifyDiaryRequest(category, diaryKey, date);
         mViewModel = new ModifyDiaryViewModel(this, this, request);
         mDataBinding.setViewModel(mViewModel);
     }
@@ -93,10 +94,11 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
         }
     }
 
-    public static void startModifyDiaryActivityWithAnim(Activity activity, Category category, String key, View container) {
+    public static void startModifyDiaryActivityWithAnim(Activity activity, Category category, String key, String date, View container) {
         Intent intent = new Intent(activity, ModifyDiaryActivity.class);
         intent.putExtra(EXTRA_CATEGORY, category.value);
         intent.putExtra(EXTRA_DIARY_KEY, key);
+        intent.putExtra(EXTRA_DATE, date);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP && container != null) {
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, container, TRANSITION_NAME_DIARY_CONTAINER);

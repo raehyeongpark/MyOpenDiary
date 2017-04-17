@@ -1,5 +1,6 @@
 package com.bicos.myopendiary.diary;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -10,9 +11,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.diary.data.Category;
+import com.bicos.myopendiary.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +24,9 @@ import java.util.List;
  * Created by raehyeong.park on 2017. 3. 24..
  */
 
-public class DiaryListPagerFragment extends Fragment {
+public class DiaryListPagerFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
 
+    private String mDate;
 
     public DiaryListPagerFragment() {
     }
@@ -42,6 +46,10 @@ public class DiaryListPagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         Category category = getArguments().getParcelable("category");
+
+        if (mDate == null) {
+            mDate = DateUtils.today();
+        }
 
         View root = inflater.inflate(R.layout.fragment_diary_list_pager, container, false);
 
@@ -67,6 +75,11 @@ public class DiaryListPagerFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        mDate = DateUtils.getDate(year, month, dayOfMonth);
+    }
+
     private class DiaryListViewPagerAdapter extends FragmentPagerAdapter{
 
         List<Category> items;
@@ -78,7 +91,7 @@ public class DiaryListPagerFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return DiaryListFragment.newInstance(items.get(position));
+            return DiaryListFragment.newInstance(items.get(position), mDate);
         }
 
         @Override

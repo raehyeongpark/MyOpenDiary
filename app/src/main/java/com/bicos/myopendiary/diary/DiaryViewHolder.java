@@ -20,6 +20,7 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnC
     private TextView desc;
     private Category category;
     private String key;
+    private String date;
 
     public DiaryViewHolder(View itemView) {
         super(itemView);
@@ -32,6 +33,10 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void populateViewHolder(Diary diary, String key) {
@@ -48,6 +53,7 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnC
             ModifyDiaryActivity.startModifyDiaryActivityWithAnim((Activity) context,
                     category,
                     key,
+                    date,
                     itemView);
         }
     }
