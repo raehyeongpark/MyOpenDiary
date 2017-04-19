@@ -30,6 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:background="@null"
                     android:hint="@string/hint_input_title"
                     android:onTextChanged="@{(title, a,b,c) -> viewModel.inputTitle(title)}"
                     android:text="@{viewModel.title}" />
@@ -40,6 +41,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/tv_title"
+                    android:background="@null"
+                    android:gravity="top"
                     android:hint="@string/hint_input_desc"
                     android:inputType="textMultiLine"
                     android:onTextChanged="@{(desc, a,b,c) -> viewModel.inputDesc(desc)}"

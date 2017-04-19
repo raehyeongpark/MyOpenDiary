@@ -58,8 +58,10 @@ public class DetailDiaryViewModel extends BaseObservable implements ValueEventLi
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         Diary diary = dataSnapshot.getValue(Diary.class);
-        mRequest.setDiary(diary);
-        notifyChange();
+        if(diary != null) {
+            mRequest.setDiary(diary);
+            notifyChange();
+        }
     }
 
     @Override
