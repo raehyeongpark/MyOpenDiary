@@ -15,7 +15,8 @@ import android.widget.Toast;
 
 import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.databinding.ActivityModifyDiaryBinding;
-import com.bicos.myopendiary.diary.data.Category;
+import com.bicos.myopendiary.diary.data.Diary;
+import com.bicos.myopendiary.util.DateUtils;
 
 /**
  * Created by raehyeong.park on 2017. 3. 10..
@@ -23,9 +24,8 @@ import com.bicos.myopendiary.diary.data.Category;
 
 public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiaryContract.View {
 
+    private static final String EXTRA_DIARY = "diary";
     private static final String EXTRA_DIARY_KEY = "diary_key";
-    private static final String EXTRA_CATEGORY = "category";
-    private static final String EXTRA_DATE = "date";
 
     public static final String TRANSITION_NAME_DIARY_CONTAINER = "diary_container";
 
@@ -37,17 +37,16 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
 
         Intent intent = getIntent();
 
-        if (intent == null || !intent.hasExtra(EXTRA_DIARY_KEY) || !intent.hasExtra(EXTRA_CATEGORY) || !intent.hasExtra(EXTRA_DATE)) {
+        if (intent == null || !intent.hasExtra(EXTRA_DIARY_KEY) || !intent.hasExtra(EXTRA_DIARY)) {
             return;
         }
 
         ActivityModifyDiaryBinding mDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_modify_diary);
 
-        String category = intent.getStringExtra(EXTRA_CATEGORY);
+        Diary diary = intent.getParcelableExtra(EXTRA_DIARY);
         String diaryKey = intent.getStringExtra(EXTRA_DIARY_KEY);
-        String date = intent.getStringExtra(EXTRA_DATE);
 
-        ModifyDiaryRequest request = new ModifyDiaryRequest(category, diaryKey, date);
+        ModifyDiaryRequest request = new ModifyDiaryRequest(diary.getCategory().value, diaryKey, DateUtils.getDate(diary.getDate()));
         mViewModel = new ModifyDiaryViewModel(this, this, request);
         mDataBinding.setViewModel(mViewModel);
     }
@@ -94,11 +93,10 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
         }
     }
 
-    public static void startModifyDiaryActivityWithAnim(Activity activity, Category category, String key, String date, View container) {
+    public static void startModifyDiaryActivityWithAnim(Activity activity, Diary diary, String key, View container) {
         Intent intent = new Intent(activity, ModifyDiaryActivity.class);
-        intent.putExtra(EXTRA_CATEGORY, category.value);
+        intent.putExtra(EXTRA_DIARY, diary);
         intent.putExtra(EXTRA_DIARY_KEY, key);
-        intent.putExtra(EXTRA_DATE, date);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP && container != null) {
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, container, TRANSITION_NAME_DIARY_CONTAINER);

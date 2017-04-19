@@ -22,19 +22,26 @@ public class Diary implements Parcelable {
 
     private String mUid;
 
+    private Category mCategory;
+
+    private long mDate;
+
     public Diary() {
     }
 
-    public Diary(String title, String desc, String uid) {
+    public Diary(String title, String desc, String uid, Category category, long date) {
         mTitle = title;
         mDesc = desc;
         mUid = uid;
+        mDate = date;
     }
 
     protected Diary(Parcel in) {
         mTitle = in.readString();
         mDesc = in.readString();
         mUid = in.readString();
+        mCategory = in.readParcelable(Category.class.getClassLoader());
+        mDate = in.readLong();
     }
 
     @Override
@@ -42,24 +49,9 @@ public class Diary implements Parcelable {
         dest.writeString(mTitle);
         dest.writeString(mDesc);
         dest.writeString(mUid);
+        dest.writeParcelable(mCategory, 0);
+        dest.writeLong(mDate);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Diary> CREATOR = new Creator<Diary>() {
-        @Override
-        public Diary createFromParcel(Parcel in) {
-            return new Diary(in);
-        }
-
-        @Override
-        public Diary[] newArray(int size) {
-            return new Diary[size];
-        }
-    };
 
     public String getTitle() {
         return mTitle;
@@ -85,13 +77,47 @@ public class Diary implements Parcelable {
         this.mUid = mUid;
     }
 
+    public Category getCategory() {
+        return mCategory;
+    }
+
+    public void setCategory(Category mCategory) {
+        this.mCategory = mCategory;
+    }
+
+    public long getDate() {
+        return mDate;
+    }
+
+    public void setDate(long mDate) {
+        this.mDate = mDate;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Diary> CREATOR = new Creator<Diary>() {
+        @Override
+        public Diary createFromParcel(Parcel in) {
+            return new Diary(in);
+        }
+
+        @Override
+        public Diary[] newArray(int size) {
+            return new Diary[size];
+        }
+    };
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("title", mTitle);
         result.put("desc", mDesc);
         result.put("uid", mUid);
-
+        result.put("category", mCategory);
+        result.put("date", mDate);
         return result;
     }
 }

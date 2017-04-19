@@ -24,5 +24,4 @@ public class WriteDiaryActivity extends AppCompatActivity {
                 R.id.container_write_diary);
     }
 
-
 }

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bicos.myopendiary.R;
-import com.bicos.myopendiary.diary.data.Category;
 import com.bicos.myopendiary.diary.data.Diary;
 
 /**
@@ -18,9 +17,8 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
     private TextView title;
     private TextView desc;
-    private Category category;
     private String key;
-    private String date;
+    private Diary diary;
 
     public DiaryViewHolder(View itemView) {
         super(itemView);
@@ -31,30 +29,18 @@ public class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnC
         itemView.setOnClickListener(this);
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public void populateViewHolder(Diary diary, String key) {
         title.setText(diary.getTitle());
         desc.setText(diary.getDesc());
         this.key = key;
+        this.diary = diary;
     }
-
 
     @Override
     public void onClick(View view) {
         Context context = itemView.getContext();
         if (context instanceof Activity) {
-            ModifyDiaryActivity.startModifyDiaryActivityWithAnim((Activity) context,
-                    category,
-                    key,
-                    date,
-                    itemView);
+            DetailDiaryActivity.startDetailDiaryActivity((Activity) context, diary, key);
         }
     }
 }

@@ -7,21 +7,35 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.databinding.ActivityDetailDiaryBinding;
 import com.bicos.myopendiary.diary.data.Diary;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Created by raehyeong.park on 2017. 3. 10..
  */
 
-public class DetailDiaryActivity extends AppCompatActivity {
+public class DetailDiaryActivity extends AppCompatActivity implements DetailDiaryContract.View {
 
     public static final String EXTRA_DIARY = "diary";
 
+    public static final String EXTRA_KEY = "key";
+
     public static final String TRANSITION_NAME_DIARY_CONTAINER = "diary_container";
+
+    private View containerDiary;
+
+    private Diary diary;
+
+    private DetailDiaryViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,26 +47,64 @@ public class DetailDiaryActivity extends AppCompatActivity {
             return;
         }
 
-        Diary diary = intent.getParcelableExtra(EXTRA_DIARY);
+        this.diary = intent.getParcelableExtra(EXTRA_DIARY);
+        String key = intent.getStringExtra(EXTRA_KEY);
+
+        viewModel = new DetailDiaryViewModel(this, diary, key);
 
         ActivityDetailDiaryBinding dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_diary);
+        dataBinding.setViewModel(viewModel);
 
-        dataBinding.setViewModel(new DetailDiaryViewModel(diary));
+        containerDiary = findViewById(R.id.container_diary);
     }
 
-    public static void startDetailDiaryActivity(Activity activity, Diary diary) {
-        startDetailDiaryActivityWithAnim(activity, diary, null);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null && currentUser.getUid().equals(diary.getUid())) {
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.menu_detail_diary, menu);
+            return true;
+        } else {
+            return super.onCreateOptionsMenu(menu);
+        }
     }
 
-    public static void startDetailDiaryActivityWithAnim(Activity activity, Diary diary, View container) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_modify:
+                viewModel.clickModifyDiary();
+                return true;
+            case R.id.action_delete:
+                viewModel.clickDeleteDiary(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void goModifyPage(Diary diary, String key) {
+        ModifyDiaryActivity.startModifyDiaryActivityWithAnim(this, diary, key, containerDiary);
+    }
+
+    @Override
+    public void successDeleteDiary() {
+        Toast.makeText(this, R.string.toast_diary_delete_success, Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void failureDeleteDiary(Exception exception) {
+        Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    public static void startDetailDiaryActivity(Activity activity, Diary diary, String key) {
         Intent intent = new Intent(activity, DetailDiaryActivity.class);
         intent.putExtra(EXTRA_DIARY, diary);
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP && container != null) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(activity, container, TRANSITION_NAME_DIARY_CONTAINER);
-            activity.startActivity(intent, options.toBundle());
-        } else {
-            activity.startActivity(intent);
-        }
+        intent.putExtra(EXTRA_KEY, key);
+        activity.startActivity(intent);
     }
 }

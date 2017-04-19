@@ -29,4 +29,11 @@ public class DateUtils {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.KOREA);
         return format.format(date);
     }
+
+    public static String getDate(long date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+        return format.format(calendar.getTime());
+    }
 }

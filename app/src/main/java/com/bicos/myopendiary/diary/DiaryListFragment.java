@@ -103,23 +103,10 @@ public class DiaryListFragment extends Fragment implements DatePickerDialog.OnDa
                 ref) {
 
             @Override
-            public DiaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                DiaryViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-                viewHolder.setCategory(category);
-                viewHolder.setDate(date);
-                return viewHolder;
-            }
-
-            @Override
             protected void populateViewHolder(DiaryViewHolder viewHolder, final Diary model, int position) {
                 viewHolder.populateViewHolder(model, getRef(position).getKey());
             }
         };
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

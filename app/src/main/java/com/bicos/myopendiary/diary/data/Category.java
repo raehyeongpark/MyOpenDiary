@@ -12,6 +12,9 @@ public class Category implements Parcelable {
     public String name;
     public String value;
 
+    public Category() {
+    }
+
     public Category(String name, String value) {
         this.name = name;
         this.value = value;

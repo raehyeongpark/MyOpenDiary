@@ -3,6 +3,7 @@ package com.bicos.myopendiary.diary;
 import android.app.Activity;
 
 import com.bicos.myopendiary.diary.data.Diary;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.database.DatabaseReference;
 
 /**
@@ -19,6 +20,7 @@ public class WriteDiaryContract {
     }
 
     interface Request {
-        void requestWriteDiary(Diary diary, boolean isPublic,  Activity activity, DatabaseReference.CompletionListener listener);
+
+        void requestWriteDiary(Diary diary, boolean isPublic, Activity activity, DatabaseReference.CompletionListener listener);
     }
 }

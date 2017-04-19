@@ -43,7 +43,7 @@ public class WriteDiaryViewModel extends BaseObservable {
     }
 
     public void clickWriteDiary() {
-        mRequest.requestWriteDiary(mDiary,true, mActivity, new DatabaseReference.CompletionListener() {
+        mRequest.requestWriteDiary(mDiary, true, mActivity, new DatabaseReference.CompletionListener() {
 
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
