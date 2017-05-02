@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.bicos.myopendiary.diary.WriteDiaryViewModel" />
+            type="com.bicos.myopendiary.diary.write.WriteDiaryViewModel" />
 
     </data>
 

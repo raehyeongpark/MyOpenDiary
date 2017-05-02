@@ -19,9 +19,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".diary.WriteDiaryActivity" />
-        <activity android:name=".diary.DetailDiaryActivity" />
-        <activity android:name=".diary.ModifyDiaryActivity" />
+        <activity android:name=".diary.write.WriteDiaryActivity" />
+        <activity android:name=".diary.detail.DetailDiaryActivity" />
+        <activity android:name=".diary.modify.ModifyDiaryActivity" />
 
     </application>
 

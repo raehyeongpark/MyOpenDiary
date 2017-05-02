@@ -1,7 +1,6 @@
-package com.bicos.myopendiary.diary;
+package com.bicos.myopendiary.diary.detail;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.databinding.ActivityDetailDiaryBinding;
+import com.bicos.myopendiary.diary.modify.ModifyDiaryActivity;
 import com.bicos.myopendiary.diary.data.Diary;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

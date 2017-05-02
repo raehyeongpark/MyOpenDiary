@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.diary.data.Diary;
+import com.bicos.myopendiary.diary.detail.DetailDiaryActivity;
 
 /**
  * Created by raehyeong.park on 2017. 3. 8..

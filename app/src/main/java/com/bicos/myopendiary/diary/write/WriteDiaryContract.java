@@ -1,4 +1,4 @@
-package com.bicos.myopendiary.diary;
+package com.bicos.myopendiary.diary.write;
 
 import android.app.Activity;
 

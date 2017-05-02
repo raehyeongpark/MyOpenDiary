@@ -1,4 +1,4 @@
-package com.bicos.myopendiary.diary;
+package com.bicos.myopendiary.diary.modify;
 
 import android.app.Activity;
 import android.app.ActivityOptions;

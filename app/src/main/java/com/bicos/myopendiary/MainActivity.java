@@ -13,8 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.bicos.myopendiary.diary.DiaryListPagerFragment;
-import com.bicos.myopendiary.diary.WriteDiaryActivity;
-import com.bicos.myopendiary.diary.data.Category;
+import com.bicos.myopendiary.diary.write.WriteDiaryActivity;
 import com.bicos.myopendiary.sidemenu.SideMenuFragment;
 import com.bicos.myopendiary.util.ActivityUtils;
 import com.google.firebase.auth.FirebaseAuth;
