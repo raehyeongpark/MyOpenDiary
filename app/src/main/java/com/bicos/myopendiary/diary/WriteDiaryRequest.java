@@ -44,9 +44,7 @@ public class WriteDiaryRequest implements WriteDiaryContract.Request {
             diary.setDate(Calendar.getInstance().getTimeInMillis());
         }
 
-        if (diary.getCategory() == null) {
-            diary.setCategory(new Category("나", diary.getUid()));
-        }
+        diary.setType(Constants.TYPE_PRIVATE);
 
         String key = mRef.child(diary.getUid()).child(DateUtils.getDate(diary.getDate())).push().getKey();
         Map<String, Object> diaryValues = diary.toMap();
@@ -54,7 +52,7 @@ public class WriteDiaryRequest implements WriteDiaryContract.Request {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/" + diary.getUid() + "/" + DateUtils.getDate(diary.getDate()) + "/" + key, diaryValues);
         if (isPublic) {
-            diary.setCategory(new Category("전체", "all"));
+            diary.setType(Constants.TYPE_ALL);
             diaryValues = diary.toMap();
             childUpdates.put("/all/" + DateUtils.getDate(diary.getDate()) + "/" + key, diaryValues);
         }

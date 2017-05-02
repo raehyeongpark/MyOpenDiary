@@ -7,13 +7,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bicos.myopendiary.R;
+import com.bicos.myopendiary.common.Constants;
 import com.bicos.myopendiary.databinding.ActivityModifyDiaryBinding;
 import com.bicos.myopendiary.diary.data.Diary;
 import com.bicos.myopendiary.util.DateUtils;
@@ -46,7 +44,11 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
         Diary diary = intent.getParcelableExtra(EXTRA_DIARY);
         String diaryKey = intent.getStringExtra(EXTRA_DIARY_KEY);
 
-        ModifyDiaryRequest request = new ModifyDiaryRequest(diary.getCategory().value, diaryKey, DateUtils.getDate(diary.getDate()));
+        ModifyDiaryRequest request = new ModifyDiaryRequest(
+                Constants.TYPE_ALL.equals(diary.getType()) ? Constants.TYPE_ALL : diary.getUid(),
+                diaryKey,
+                DateUtils.getDate(diary.getDate()));
+
         mViewModel = new ModifyDiaryViewModel(this, this, request);
         mDataBinding.setViewModel(mViewModel);
     }
@@ -72,25 +74,6 @@ public class ModifyDiaryActivity extends AppCompatActivity implements ModifyDiar
     @Override
     public void failureModifyDiary(Exception exception) {
         Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_modify, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                mViewModel.clickDeleteDiary();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
     }
 
     public static void startModifyDiaryActivityWithAnim(Activity activity, Diary diary, String key, View container) {

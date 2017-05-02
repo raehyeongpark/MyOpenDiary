@@ -22,7 +22,7 @@ public class Diary implements Parcelable {
 
     private String mUid;
 
-    private Category mCategory;
+    private String mType;
 
     private long mDate;
 
@@ -40,7 +40,7 @@ public class Diary implements Parcelable {
         mTitle = in.readString();
         mDesc = in.readString();
         mUid = in.readString();
-        mCategory = in.readParcelable(Category.class.getClassLoader());
+        mType = in.readString();
         mDate = in.readLong();
     }
 
@@ -49,7 +49,7 @@ public class Diary implements Parcelable {
         dest.writeString(mTitle);
         dest.writeString(mDesc);
         dest.writeString(mUid);
-        dest.writeParcelable(mCategory, 0);
+        dest.writeString(mType);
         dest.writeLong(mDate);
     }
 
@@ -77,12 +77,12 @@ public class Diary implements Parcelable {
         this.mUid = mUid;
     }
 
-    public Category getCategory() {
-        return mCategory;
+    public String getType() {
+        return mType;
     }
 
-    public void setCategory(Category mCategory) {
-        this.mCategory = mCategory;
+    public void setType(String type) {
+        this.mType = type;
     }
 
     public long getDate() {
@@ -116,7 +116,7 @@ public class Diary implements Parcelable {
         result.put("title", mTitle);
         result.put("desc", mDesc);
         result.put("uid", mUid);
-        result.put("category", mCategory);
+        result.put("type", mType);
         result.put("date", mDate);
         return result;
     }

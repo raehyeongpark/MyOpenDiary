@@ -30,10 +30,10 @@ public class DiaryListFragment extends Fragment implements DatePickerDialog.OnDa
     public DiaryListFragment() {
     }
 
-    public static DiaryListFragment newInstance(Category category, String date) {
+    public static DiaryListFragment newInstance(String type, String date) {
 
         Bundle args = new Bundle();
-        args.putParcelable("category", category);
+        args.putString("type", type);
         args.putString("date", date);
 
         DiaryListFragment fragment = new DiaryListFragment();
@@ -46,7 +46,7 @@ public class DiaryListFragment extends Fragment implements DatePickerDialog.OnDa
     private RecyclerView mRecyclerView;
     private FirebaseRecyclerAdapter<Diary, DiaryViewHolder> mAdapter;
 
-    private Category category;
+    private String type;
     private String date;
 
     @Override
@@ -58,8 +58,7 @@ public class DiaryListFragment extends Fragment implements DatePickerDialog.OnDa
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        this.category = getArguments().getParcelable("category");
-
+        this.type = getArguments().getString("type");
         this.date = getArguments().getString("date");
 
         if (date == null) {
@@ -89,7 +88,7 @@ public class DiaryListFragment extends Fragment implements DatePickerDialog.OnDa
         mAdapter = createAdapter(FirebaseDatabase.getInstance()
                 .getReference()
                 .child(Constants.REF_DIARY)
-                .child(category.value)
+                .child(type)
                 .child(date));
         mRecyclerView.setAdapter(mAdapter);
 
@@ -131,7 +130,7 @@ public class DiaryListFragment extends Fragment implements DatePickerDialog.OnDa
         mAdapter = createAdapter(FirebaseDatabase.getInstance()
                 .getReference()
                 .child(Constants.REF_DIARY)
-                .child(category.value)
+                .child(type)
                 .child(date));
 
         mRecyclerView.setAdapter(mAdapter);

@@ -27,7 +27,7 @@ public class DetailDiaryRequest implements DetailDiaryContract.Request {
         this.mKey = key;
         this.mRef = FirebaseDatabase.getInstance().getReference()
                 .child(Constants.REF_DIARY)
-                .child(mDiary.getCategory().value)
+                .child(Constants.TYPE_ALL.equals(diary.getType()) ? Constants.TYPE_ALL : diary.getUid())
                 .child(DateUtils.getDate(mDiary.getDate()))
                 .child(mKey);
         mRef.addValueEventListener(listener);

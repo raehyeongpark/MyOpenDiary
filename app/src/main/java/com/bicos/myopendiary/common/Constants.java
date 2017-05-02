@@ -7,4 +7,7 @@ package com.bicos.myopendiary.common;
 public class Constants {
 
     public static final String REF_DIARY = "diary";
+
+    public static final String TYPE_PRIVATE = "private";
+    public static final String TYPE_ALL = "all";
 }

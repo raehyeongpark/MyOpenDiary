@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             // main setting
             ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(),
-                    DiaryListPagerFragment.newInstance(new Category("나", user.getUid())),
+                    DiaryListPagerFragment.newInstance(),
                     R.id.container_main);
         }
     }
