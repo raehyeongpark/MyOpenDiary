@@ -6,6 +6,9 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,8 +34,6 @@ public class DetailDiaryActivity extends AppCompatActivity implements DetailDiar
 
     public static final String TRANSITION_NAME_DIARY_CONTAINER = "diary_container";
 
-    private View containerDiary;
-
     private Diary diary;
 
     private DetailDiaryViewModel viewModel;
@@ -50,12 +51,14 @@ public class DetailDiaryActivity extends AppCompatActivity implements DetailDiar
         this.diary = intent.getParcelableExtra(EXTRA_DIARY);
         String key = intent.getStringExtra(EXTRA_KEY);
 
-        viewModel = new DetailDiaryViewModel(this, diary, key);
+        viewModel = new DetailDiaryViewModel(this);
+        viewModel.setData(diary, key);
 
         ActivityDetailDiaryBinding dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail_diary);
         dataBinding.setViewModel(viewModel);
 
-        containerDiary = findViewById(R.id.container_diary);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_detail_diary);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -86,7 +89,7 @@ public class DetailDiaryActivity extends AppCompatActivity implements DetailDiar
 
     @Override
     public void goModifyPage(Diary diary, String key) {
-        ModifyDiaryActivity.startModifyDiaryActivityWithAnim(this, diary, key, containerDiary);
+        ModifyDiaryActivity.startModifyDiaryActivityWithAnim(this, diary, key, null);
     }
 
     @Override
@@ -99,6 +102,16 @@ public class DetailDiaryActivity extends AppCompatActivity implements DetailDiar
     public void failureDeleteDiary(Exception exception) {
         Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    @Override
+    public void successWriteComment() {
+        Toast.makeText(this, "댓글 작성이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void failureWriteComment(Exception exception) {
+        Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     public static void startDetailDiaryActivity(Activity activity, Diary diary, String key) {

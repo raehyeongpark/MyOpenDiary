@@ -45,6 +45,7 @@ public class WriteDiaryRequest implements WriteDiaryContract.Request {
         diary.setType(Constants.TYPE_PRIVATE);
 
         String key = mRef.child(diary.getUid()).child(DateUtils.getDate(diary.getDate())).push().getKey();
+        diary.setCommentKey(key);
         Map<String, Object> diaryValues = diary.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();

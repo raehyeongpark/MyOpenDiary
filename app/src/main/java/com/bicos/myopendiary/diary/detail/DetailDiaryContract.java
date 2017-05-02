@@ -2,8 +2,12 @@ package com.bicos.myopendiary.diary.detail;
 
 import android.app.Activity;
 
+import com.bicos.myopendiary.diary.data.Comment;
 import com.bicos.myopendiary.diary.data.Diary;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 /**
  * Created by raehyeong.park on 2017. 4. 19..
@@ -17,12 +21,16 @@ public class DetailDiaryContract {
         void successDeleteDiary();
 
         void failureDeleteDiary(Exception exception);
+
+        void successWriteComment();
+
+        void failureWriteComment(Exception exception);
     }
 
     public interface Request {
         void requestDeleteDiary(Activity activity, OnCompleteListener<Void> listener);
 
-        void setDiary(Diary diary);
+        void setData(Diary diary, String key, ValueEventListener listener, ValueEventListener listener2);
 
         String getTitle();
 
@@ -31,5 +39,17 @@ public class DetailDiaryContract {
         Diary getDiary();
 
         String getKey();
+
+        void setDiary(Diary diary);
+
+        void setCommentList(List<Comment> commentList);
+
+        List<DetailDiaryAdapter.ItemWrapper> getDataList();
+
+        void setWriteComment(String comment);
+
+        String getWriteComment();
+
+        void requestWriteComment(Activity activity, OnCompleteListener<Void> listener);
     }
 }

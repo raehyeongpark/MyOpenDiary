@@ -1,8 +1,11 @@
 package com.bicos.myopendiary.diary.data;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.bicos.myopendiary.BR;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -14,7 +17,7 @@ import java.util.Map;
  */
 
 @IgnoreExtraProperties
-public class Diary implements Parcelable {
+public class Diary extends BaseObservable implements Parcelable {
 
     private String mTitle;
 
@@ -25,6 +28,8 @@ public class Diary implements Parcelable {
     private String mType;
 
     private long mDate;
+
+    private String mCommentKey;
 
     public Diary() {
     }
@@ -42,6 +47,7 @@ public class Diary implements Parcelable {
         mUid = in.readString();
         mType = in.readString();
         mDate = in.readLong();
+        mCommentKey = in.readString();
     }
 
     @Override
@@ -51,46 +57,7 @@ public class Diary implements Parcelable {
         dest.writeString(mUid);
         dest.writeString(mType);
         dest.writeLong(mDate);
-    }
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String mTitle) {
-        this.mTitle = mTitle;
-    }
-
-    public String getDesc() {
-        return mDesc;
-    }
-
-    public void setDesc(String mDesc) {
-        this.mDesc = mDesc;
-    }
-
-    public String getUid() {
-        return mUid;
-    }
-
-    public void setUid(String mUid) {
-        this.mUid = mUid;
-    }
-
-    public String getType() {
-        return mType;
-    }
-
-    public void setType(String type) {
-        this.mType = type;
-    }
-
-    public long getDate() {
-        return mDate;
-    }
-
-    public void setDate(long mDate) {
-        this.mDate = mDate;
+        dest.writeString(mCommentKey);
     }
 
     @Override
@@ -110,6 +77,60 @@ public class Diary implements Parcelable {
         }
     };
 
+    @Bindable
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String mTitle) {
+        this.mTitle = mTitle;
+        notifyPropertyChanged(BR.title);
+    }
+
+    @Bindable
+    public String getDesc() {
+        return mDesc;
+    }
+
+    public void setDesc(String mDesc) {
+        this.mDesc = mDesc;
+        notifyPropertyChanged(BR.desc);
+    }
+
+    public String getUid() {
+        return mUid;
+    }
+
+    public void setUid(String mUid) {
+        this.mUid = mUid;
+    }
+
+    public String getType() {
+        return mType;
+    }
+
+    public void setType(String type) {
+        this.mType = type;
+    }
+
+    @Bindable
+    public long getDate() {
+        return mDate;
+    }
+
+    public void setDate(long mDate) {
+        this.mDate = mDate;
+        notifyPropertyChanged(BR.date);
+    }
+
+    public String getCommentKey() {
+        return mCommentKey;
+    }
+
+    public void setCommentKey(String commentKey) {
+        this.mCommentKey = commentKey;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
@@ -118,6 +139,7 @@ public class Diary implements Parcelable {
         result.put("uid", mUid);
         result.put("type", mType);
         result.put("date", mDate);
+        result.put("commentKey", mCommentKey);
         return result;
     }
 }
