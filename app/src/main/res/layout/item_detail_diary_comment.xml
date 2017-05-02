@@ -3,9 +3,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
-            name="comment"
-            type="com.bicos.myopendiary.diary.data.Comment" />
+            name="viewModel"
+            type="com.bicos.myopendiary.diary.detail.DetailDiaryCommentViewModel" />
 
     </data>
 
@@ -19,8 +21,22 @@
             style="@style/Base.TextAppearance.AppCompat.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btn_delete"
+            android:layout_alignTop="@+id/btn_delete"
+            android:layout_alignWithParentIfMissing="true"
             android:layout_below="@+id/tv_title"
-            android:text="@{comment.getMsg}" />
+            android:layout_toLeftOf="@+id/btn_delete"
+            android:text="@{viewModel.commentMsg}" />
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:src="@android:drawable/ic_delete"
+            android:onClick="@{(view) -> viewModel.clickDeleteComment()}"
+            android:visibility="@{viewModel.showDeleteBtn ? View.VISIBLE : View.GONE}" />
 
     </RelativeLayout>
 
