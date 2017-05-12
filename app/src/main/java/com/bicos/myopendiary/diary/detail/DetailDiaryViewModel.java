@@ -43,7 +43,8 @@ public class DetailDiaryViewModel extends BaseObservable {
                 Diary diary = dataSnapshot.getValue(Diary.class);
                 if (diary != null) {
                     mRequest.setDiary(diary);
-                    notifyPropertyChanged(BR.dataList);
+                    notifyPropertyChanged(BR.diary);
+                    notifyPropertyChanged(BR.commentList);
                 }
             }
 
@@ -61,7 +62,9 @@ public class DetailDiaryViewModel extends BaseObservable {
                 }
 
                 mRequest.setCommentList(commentList);
-                notifyPropertyChanged(BR.dataList);
+
+                notifyPropertyChanged(BR.diary);
+                notifyPropertyChanged(BR.commentList);
             }
 
             @Override
@@ -108,8 +111,13 @@ public class DetailDiaryViewModel extends BaseObservable {
     }
 
     @Bindable
-    public List<DetailDiaryAdapter.ItemWrapper> getDataList() {
-        return mRequest.getDataList();
+    public Diary getDiary(){
+        return mRequest.getDiary();
+    }
+
+    @Bindable
+    public List<Comment> getCommentList(){
+        return mRequest.getCommentList();
     }
 
     @Bindable
@@ -129,14 +137,16 @@ public class DetailDiaryViewModel extends BaseObservable {
         return TextUtils.isEmpty(mRequest.getWriteComment());
     }
 
-    @BindingAdapter("bind:setAdapter")
-    public static void setAdapter(RecyclerView recyclerView, List<DetailDiaryAdapter.ItemWrapper> itemWrapperList) {
+    @BindingAdapter("setAdapter")
+    public static void setAdapter(RecyclerView recyclerView, Diary diary, List<Comment> commentList) {
         if (recyclerView.getAdapter() != null) {
             DetailDiaryAdapter adapter = (DetailDiaryAdapter) recyclerView.getAdapter();
-            adapter.setItemList(itemWrapperList);
+            adapter.setDiary(diary);
+            adapter.setCommentList(commentList);
         } else {
             DetailDiaryAdapter adapter = new DetailDiaryAdapter();
-            adapter.setItemList(itemWrapperList);
+            adapter.setDiary(diary);
+            adapter.setCommentList(commentList);
             recyclerView.setAdapter(adapter);
         }
     }

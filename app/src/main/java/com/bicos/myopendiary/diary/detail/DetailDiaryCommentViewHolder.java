@@ -12,15 +12,16 @@ import com.bicos.myopendiary.diary.data.Comment;
 
 public class DetailDiaryCommentViewHolder extends RecyclerView.ViewHolder implements DetailDiaryCommentContract.View {
 
-    private ItemDetailDiaryCommentBinding binding;
+    private DetailDiaryCommentViewModel viewModel;
 
     public DetailDiaryCommentViewHolder(ItemDetailDiaryCommentBinding binding) {
         super(binding.getRoot());
-        this.binding = binding;
+        viewModel = new DetailDiaryCommentViewModel(this, new DetailDiaryCommentModel());
+        binding.setViewModel(viewModel);
     }
 
-    public void setData(Comment comment) {
-        binding.setComment(comment);
+    public void setData(Comment comment, String commentKey) {
+        viewModel.setComment(comment, commentKey);
     }
 
     @Override

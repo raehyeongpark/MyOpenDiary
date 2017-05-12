@@ -13,6 +13,14 @@ public class FirebaseWrapper {
         return FirebaseDatabase.getInstance().getReference().child(Constants.REF_DIARY);
     }
 
+    public static DatabaseReference getCommentReference() {
+        return FirebaseDatabase.getInstance().getReference().child(Constants.REF_COMMENT);
+    }
+
+    public static DatabaseReference getCommentReference(String key) {
+        return FirebaseDatabase.getInstance().getReference().child(Constants.REF_COMMENT).child(key);
+    }
+
     public static DatabaseReference getDiaryReference(String uid, String date) {
         return FirebaseDatabase.getInstance().getReference().child(Constants.REF_DIARY).child(uid).child(date);
     }

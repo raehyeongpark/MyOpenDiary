@@ -1,6 +1,11 @@
 package com.bicos.myopendiary.diary.detail;
 
+import android.app.Activity;
+
+import com.bicos.myopendiary.common.FirebaseWrapper;
 import com.bicos.myopendiary.diary.data.Comment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.database.DatabaseReference;
 
 /**
  * Created by raehyeong.park on 2017. 5. 2..
@@ -10,9 +15,16 @@ public class DetailDiaryCommentModel implements DetailDiaryCommentContract.Model
 
     private Comment comment;
 
+    private DatabaseReference reference;
+
+    public DetailDiaryCommentModel() {
+
+    }
+
     @Override
-    public void setComment(Comment comment) {
+    public void setComment(Comment comment, String commentKey) {
         this.comment = comment;
+        this.reference = FirebaseWrapper.getCommentReference(commentKey).child(comment.getKey());
     }
 
     @Override
@@ -21,8 +33,8 @@ public class DetailDiaryCommentModel implements DetailDiaryCommentContract.Model
     }
 
     @Override
-    public void requestDeleteComment() {
-
+    public void requestDeleteComment(Activity activity, OnCompleteListener<Void> listener) {
+        reference.removeValue().addOnCompleteListener(activity, listener);
     }
 
     @Override

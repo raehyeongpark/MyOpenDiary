@@ -11,8 +11,6 @@ import com.bicos.myopendiary.diary.data.Diary;
 
 public class DetailDiaryViewHolder extends RecyclerView.ViewHolder {
 
-    private Diary diary;
-
     private ItemDetailDiaryBinding binding;
 
     public DetailDiaryViewHolder(ItemDetailDiaryBinding binding) {

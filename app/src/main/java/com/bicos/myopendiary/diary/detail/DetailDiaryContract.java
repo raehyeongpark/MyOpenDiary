@@ -44,12 +44,12 @@ public class DetailDiaryContract {
 
         void setCommentList(List<Comment> commentList);
 
-        List<DetailDiaryAdapter.ItemWrapper> getDataList();
-
         void setWriteComment(String comment);
 
         String getWriteComment();
 
         void requestWriteComment(Activity activity, OnCompleteListener<Void> listener);
+
+        List<Comment> getCommentList();
     }
 }

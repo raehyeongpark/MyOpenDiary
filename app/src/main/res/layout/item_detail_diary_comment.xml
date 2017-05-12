@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:background="@null"
             android:src="@android:drawable/ic_delete"
-            android:onClick="@{(view) -> viewModel.clickDeleteComment()}"
+            android:onClick="@{(view) -> viewModel.clickDeleteComment(context)}"
             android:visibility="@{viewModel.showDeleteBtn ? View.VISIBLE : View.GONE}" />
 
     </RelativeLayout>

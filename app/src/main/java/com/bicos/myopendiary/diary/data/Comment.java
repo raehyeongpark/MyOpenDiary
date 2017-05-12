@@ -1,19 +1,27 @@
 package com.bicos.myopendiary.diary.data;
 
-import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 /**
  * Created by raehyeong.park on 2017. 5. 2..
  */
 
-public class Comment extends BaseObservable {
+public class Comment {
 
+    private String key;
     private String uid;
     private String msg;
     private long date;
 
     public Comment() {
+    }
+
+    public Comment(String key) {
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public String getUid() {
@@ -24,7 +32,6 @@ public class Comment extends BaseObservable {
         this.uid = uid;
     }
 
-    @Bindable
     public String getMsg() {
         return msg;
     }
@@ -33,7 +40,6 @@ public class Comment extends BaseObservable {
         this.msg = msg;
     }
 
-    @Bindable
     public long getDate() {
         return date;
     }

@@ -1,13 +1,16 @@
 package com.bicos.myopendiary.diary.detail;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.bicos.myopendiary.common.Constants;
+import com.bicos.myopendiary.common.FirebaseWrapper;
 import com.bicos.myopendiary.diary.data.Comment;
 import com.bicos.myopendiary.diary.data.Diary;
 import com.bicos.myopendiary.util.DateUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -52,16 +55,27 @@ public class DetailDiaryRequest implements DetailDiaryContract.Request {
         mRef.addValueEventListener(diaryListener);
 
         if (!TextUtils.isEmpty(mDiary.getCommentKey())){
-            mCommentRef = FirebaseDatabase.getInstance().getReference()
-                    .child(Constants.REF_COMMENT)
-                    .child(mDiary.getCommentKey());
+            mCommentRef = FirebaseWrapper.getCommentReference(mDiary.getCommentKey());
             mCommentRef.addValueEventListener(commentListener);
         }
     }
 
     @Override
-    public void requestDeleteDiary(Activity activity, OnCompleteListener<Void> listener) {
-        mRef.removeValue().addOnCompleteListener(activity, listener);
+    public void requestDeleteDiary(final Activity activity, final OnCompleteListener<Void> listener) {
+        if (mCommentRef != null) {
+            mCommentRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        mRef.removeValue().addOnCompleteListener(activity, listener);
+                    } else {
+                        listener.onComplete(task);
+                    }
+                }
+            });
+        } else {
+            mRef.removeValue().addOnCompleteListener(activity, listener);
+        }
     }
 
     @Override
@@ -72,23 +86,6 @@ public class DetailDiaryRequest implements DetailDiaryContract.Request {
     @Override
     public void setCommentList(List<Comment> commentList) {
         this.mCommentList = commentList;
-    }
-
-    @Override
-    public List<DetailDiaryAdapter.ItemWrapper> getDataList() {
-        List<DetailDiaryAdapter.ItemWrapper> list = new ArrayList<>();
-
-        if (mDiary != null) {
-            list.add(new DetailDiaryAdapter.ItemWrapper(mDiary, DetailDiaryAdapter.TYPE_DIARY));
-        }
-
-        if (!mCommentList.isEmpty()) {
-            for (Comment comment : mCommentList) {
-                list.add(new DetailDiaryAdapter.ItemWrapper(comment, DetailDiaryAdapter.TYPE_COMMENT));
-            }
-        }
-
-        return list;
     }
 
     @Override
@@ -111,12 +108,17 @@ public class DetailDiaryRequest implements DetailDiaryContract.Request {
             return;
         }
 
-        Comment comment = new Comment();
+        Comment comment = new Comment(key);
         comment.setDate(Calendar.getInstance().getTimeInMillis());
         comment.setUid(user.getUid());
         comment.setMsg(mWriteComment);
 
         mCommentRef.child(key).setValue(comment).addOnCompleteListener(activity, listener);
+    }
+
+    @Override
+    public List<Comment> getCommentList() {
+        return mCommentList;
     }
 
     @Override

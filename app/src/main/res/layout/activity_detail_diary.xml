@@ -20,8 +20,7 @@
             android:id="@+id/list_detail_diary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/et_write_comment"
-            app:setAdapter="@{viewModel.dataList}" />
+            android:layout_above="@+id/et_write_comment" />
 
         <EditText
             android:id="@+id/et_write_comment"
