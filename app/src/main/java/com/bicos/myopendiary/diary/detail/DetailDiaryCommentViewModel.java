@@ -27,8 +27,8 @@ public class DetailDiaryCommentViewModel extends BaseObservable {
         this.model = model;
     }
 
-    public void setComment(Comment comment, String commentKey) {
-        model.setComment(comment, commentKey);
+    public void setComment(Comment comment) {
+        model.setComment(comment);
         notifyChange();
     }
 

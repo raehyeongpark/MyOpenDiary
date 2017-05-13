@@ -22,7 +22,7 @@ public class DetailDiaryCommentContract {
 
     public interface Model {
 
-        void setComment(Comment comment, String commentKey);
+        void setComment(Comment comment);
 
         void requestModifyComment();
 

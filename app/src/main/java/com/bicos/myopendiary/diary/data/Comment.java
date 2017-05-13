@@ -8,6 +8,7 @@ import android.databinding.Bindable;
 
 public class Comment {
 
+    private String parentKey;
     private String key;
     private String uid;
     private String msg;
@@ -16,7 +17,8 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String key) {
+    public Comment(String parentKey, String key) {
+        this.parentKey = parentKey;
         this.key = key;
     }
 
@@ -46,5 +48,9 @@ public class Comment {
 
     public void setDate(long date) {
         this.date = date;
+    }
+
+    public String getParentKey() {
+        return parentKey;
     }
 }

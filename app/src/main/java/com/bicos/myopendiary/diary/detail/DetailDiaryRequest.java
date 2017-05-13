@@ -108,7 +108,7 @@ public class DetailDiaryRequest implements DetailDiaryContract.Request {
             return;
         }
 
-        Comment comment = new Comment(key);
+        Comment comment = new Comment(mDiary.getCommentKey(), key);
         comment.setDate(Calendar.getInstance().getTimeInMillis());
         comment.setUid(user.getUid());
         comment.setMsg(mWriteComment);

@@ -43,8 +43,7 @@ public class DetailDiaryViewModel extends BaseObservable {
                 Diary diary = dataSnapshot.getValue(Diary.class);
                 if (diary != null) {
                     mRequest.setDiary(diary);
-                    notifyPropertyChanged(BR.diary);
-                    notifyPropertyChanged(BR.commentList);
+                    notifyPropertyChanged(BR.dataList);
                 }
             }
 
@@ -62,9 +61,7 @@ public class DetailDiaryViewModel extends BaseObservable {
                 }
 
                 mRequest.setCommentList(commentList);
-
-                notifyPropertyChanged(BR.diary);
-                notifyPropertyChanged(BR.commentList);
+                notifyPropertyChanged(BR.dataList);
             }
 
             @Override
@@ -111,13 +108,24 @@ public class DetailDiaryViewModel extends BaseObservable {
     }
 
     @Bindable
-    public Diary getDiary(){
-        return mRequest.getDiary();
-    }
+    public List<DetailDiaryAdapter.ItemWrapper> getDataList(){
+        List<DetailDiaryAdapter.ItemWrapper> itemList = new ArrayList<>();
 
-    @Bindable
-    public List<Comment> getCommentList(){
-        return mRequest.getCommentList();
+        Diary diary = mRequest.getDiary();
+
+        if (diary != null) {
+            itemList.add(new DetailDiaryAdapter.ItemWrapper(diary, DetailDiaryAdapter.TYPE_DIARY));
+        }
+
+        List<Comment> commentList = mRequest.getCommentList();
+
+        if (!commentList.isEmpty()) {
+            for (Comment comment : commentList) {
+                itemList.add(new DetailDiaryAdapter.ItemWrapper(comment, DetailDiaryAdapter.TYPE_COMMENT));
+            }
+        }
+
+        return itemList;
     }
 
     @Bindable
@@ -137,16 +145,14 @@ public class DetailDiaryViewModel extends BaseObservable {
         return TextUtils.isEmpty(mRequest.getWriteComment());
     }
 
-    @BindingAdapter("setAdapter")
-    public static void setAdapter(RecyclerView recyclerView, Diary diary, List<Comment> commentList) {
+    @BindingAdapter("setDataList")
+    public static void setData(RecyclerView recyclerView, List<DetailDiaryAdapter.ItemWrapper> dataList) {
         if (recyclerView.getAdapter() != null) {
             DetailDiaryAdapter adapter = (DetailDiaryAdapter) recyclerView.getAdapter();
-            adapter.setDiary(diary);
-            adapter.setCommentList(commentList);
+            adapter.setDataList(dataList);
         } else {
             DetailDiaryAdapter adapter = new DetailDiaryAdapter();
-            adapter.setDiary(diary);
-            adapter.setCommentList(commentList);
+            adapter.setDataList(dataList);
             recyclerView.setAdapter(adapter);
         }
     }

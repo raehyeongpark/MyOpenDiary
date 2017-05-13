@@ -25,8 +25,6 @@ public class DetailDiaryAdapter extends Adapter {
 
     private List<ItemWrapper> itemList;
 
-    private Diary diary;
-
     public DetailDiaryAdapter() {
         itemList = new ArrayList<>();
     }
@@ -53,7 +51,7 @@ public class DetailDiaryAdapter extends Adapter {
         if (holder instanceof DetailDiaryViewHolder) {
             ((DetailDiaryViewHolder) holder).setData((Diary) itemList.get(position).getObject());
         } else {
-            ((DetailDiaryCommentViewHolder) holder).setData((Comment) itemList.get(position).getObject(), diary.getCommentKey());
+            ((DetailDiaryCommentViewHolder) holder).setData((Comment) itemList.get(position).getObject());
         }
     }
 
@@ -67,27 +65,14 @@ public class DetailDiaryAdapter extends Adapter {
         return itemList.get(position).getViewType();
     }
 
-    public void setDiary(Diary diary){
-        this.diary = diary;
-
-        if (diary != null) {
-            itemList.add(new DetailDiaryAdapter.ItemWrapper(diary, DetailDiaryAdapter.TYPE_DIARY));
-        }
-
-        notifyDataSetChanged();
-    }
-
-    public void setCommentList(List<Comment> commentList){
-        if (!commentList.isEmpty()) {
-            for (Comment comment : commentList) {
-                itemList.add(new DetailDiaryAdapter.ItemWrapper(comment, DetailDiaryAdapter.TYPE_COMMENT));
-            }
-        }
-    }
-
     public void addItemList(ItemWrapper item) {
         this.itemList.add(item);
         notifyItemInserted(itemList.size());
+    }
+
+    public void setDataList(List<ItemWrapper> dataList) {
+        this.itemList = dataList;
+        notifyDataSetChanged();
     }
 
     public static class ItemWrapper {

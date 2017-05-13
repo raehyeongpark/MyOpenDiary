@@ -20,8 +20,8 @@ public class DetailDiaryCommentViewHolder extends RecyclerView.ViewHolder implem
         binding.setViewModel(viewModel);
     }
 
-    public void setData(Comment comment, String commentKey) {
-        viewModel.setComment(comment, commentKey);
+    public void setData(Comment comment) {
+        viewModel.setComment(comment);
     }
 
     @Override

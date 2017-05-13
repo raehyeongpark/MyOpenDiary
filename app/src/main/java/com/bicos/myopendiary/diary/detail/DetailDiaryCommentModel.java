@@ -22,9 +22,9 @@ public class DetailDiaryCommentModel implements DetailDiaryCommentContract.Model
     }
 
     @Override
-    public void setComment(Comment comment, String commentKey) {
+    public void setComment(Comment comment) {
         this.comment = comment;
-        this.reference = FirebaseWrapper.getCommentReference(commentKey).child(comment.getKey());
+        this.reference = FirebaseWrapper.getCommentReference(comment.getParentKey()).child(comment.getKey());
     }
 
     @Override
