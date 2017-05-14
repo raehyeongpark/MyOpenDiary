@@ -24,7 +24,7 @@ public class DetailDiaryCommentContract {
 
         void setComment(Comment comment);
 
-        void requestModifyComment();
+        void requestModifyComment(Activity activity, OnCompleteListener<Void> listener);
 
         void requestDeleteComment(Activity activity, OnCompleteListener<Void> listener);
 

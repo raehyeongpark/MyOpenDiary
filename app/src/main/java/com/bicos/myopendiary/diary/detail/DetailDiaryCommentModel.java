@@ -28,8 +28,8 @@ public class DetailDiaryCommentModel implements DetailDiaryCommentContract.Model
     }
 
     @Override
-    public void requestModifyComment() {
-
+    public void requestModifyComment(Activity activity, OnCompleteListener<Void> listener) {
+        reference.setValue(comment).addOnCompleteListener(activity, listener);
     }
 
     @Override
