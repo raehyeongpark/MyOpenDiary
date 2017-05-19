@@ -42,8 +42,12 @@ public class WriteDiaryViewModel extends BaseObservable {
         mDiary.setDesc(desc.toString());
     }
 
+    public void changeCheckBox(boolean isPublic) {
+        mRequest.setIsPublic(isPublic);
+    }
+
     public void clickWriteDiary() {
-        mRequest.requestWriteDiary(mDiary, true, mActivity, new DatabaseReference.CompletionListener() {
+        mRequest.requestWriteDiary(mDiary, mActivity, new DatabaseReference.CompletionListener() {
 
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

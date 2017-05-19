@@ -77,6 +77,12 @@ public class DiaryListPagerFragment extends Fragment implements DatePickerDialog
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+    }
+
+    @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         mDate = DateUtils.getDate(year, month, dayOfMonth);
     }

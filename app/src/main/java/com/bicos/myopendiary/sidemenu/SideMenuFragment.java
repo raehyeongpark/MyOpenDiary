@@ -34,7 +34,6 @@ public class SideMenuFragment extends Fragment implements SideMenuContract.View 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         FragmentSidemenuBinding binding = FragmentSidemenuBinding.inflate(inflater, container, false);
-
         binding.setViewModel(new SideMenuViewModel(this));
 
         return binding.getRoot();

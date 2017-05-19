@@ -21,6 +21,8 @@ public class WriteDiaryContract {
 
     interface Request {
 
-        void requestWriteDiary(Diary diary, boolean isPublic, Activity activity, DatabaseReference.CompletionListener listener);
+        void requestWriteDiary(Diary diary, Activity activity, DatabaseReference.CompletionListener listener);
+
+        void setIsPublic(boolean isPublic);
     }
 }

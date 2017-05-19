@@ -30,16 +30,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    android:hint="제목을 입력하세요"
+                    android:hint="@string/hint_input_title"
                     android:onTextChanged="@{(title, a,b,c) -> viewModel.inputTitle(title)}" />
+
+                <CheckBox
+                    android:layout_below="@+id/tv_title"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:id="@+id/cb_public"
+                    android:text="@string/checkbox_is_public_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onCheckedChanged="@{(checkbox, checked) -> viewModel.changeCheckBox(checked)}"/>
 
                 <EditText
                     android:id="@+id/tv_desc"
                     style="@style/Base.TextAppearance.AppCompat.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/tv_title"
-                    android:hint="내용을 입력하세요"
+                    android:layout_below="@+id/cb_public"
+                    android:hint="@string/hint_input_desc"
                     android:inputType="textMultiLine"
                     android:onTextChanged="@{(desc, a,b,c) -> viewModel.inputDesc(desc)}" />
 
@@ -53,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:onClick="@{(view) -> viewModel.clickWriteDiary()}"
-            android:text="write diary" />
+            android:text="@string/write_diary" />
 
     </RelativeLayout>
 </layout>

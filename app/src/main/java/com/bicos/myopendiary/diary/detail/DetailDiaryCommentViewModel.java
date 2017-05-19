@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
 import android.support.annotation.NonNull;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bicos.myopendiary.diary.data.Comment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,8 +54,20 @@ public class DetailDiaryCommentViewModel extends BaseObservable {
     }
 
     @Bindable
-    public boolean getShowDeleteBtn() {
+    public boolean getIsCommentWrittenByMe() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user != null && user.getUid().equalsIgnoreCase(model.getUid());
+    }
+
+    @BindingAdapter("setLayoutGravity")
+    public static void setLayoutGravity(TextView view, boolean isMyComment) {
+        RelativeLayout.LayoutParams layoutParam = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        if (isMyComment) {
+            layoutParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT, 0);
+            layoutParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+        } else {
+            layoutParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
+            layoutParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+        }
     }
 }

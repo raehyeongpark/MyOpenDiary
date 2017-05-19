@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="color_comment_bg">#a5e3e6</color>
+    <color name="color_comment_bg_select">#91d0d2</color>
+
+    <color name="color_my_comment_bg">#46d2d2</color>
+    <color name="color_my_comment_bg_select">#32bebe</color>
 </resources>

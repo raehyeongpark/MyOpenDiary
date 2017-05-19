@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.databinding.FragmentWriteDiaryBinding;
 
 /**
@@ -36,11 +37,8 @@ public class WriteDiaryFragment extends Fragment implements WriteDiaryContract.V
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         FragmentWriteDiaryBinding viewBinding = FragmentWriteDiaryBinding.inflate(inflater, container, false);
-
         viewBinding.setViewModel(new WriteDiaryViewModel(getActivity(), this, new WriteDiaryRequest()));
-
         return viewBinding.getRoot();
     }
 
@@ -51,7 +49,7 @@ public class WriteDiaryFragment extends Fragment implements WriteDiaryContract.V
 
     @Override
     public void successWriteDiary() {
-        Toast.makeText(getContext(), "일기를 등록하였습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.msg_success_write_diary, Toast.LENGTH_SHORT).show();
         getActivity().finish();
     }
 

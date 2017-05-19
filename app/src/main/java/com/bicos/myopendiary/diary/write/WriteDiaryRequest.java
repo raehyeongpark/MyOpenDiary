@@ -23,11 +23,14 @@ public class WriteDiaryRequest implements WriteDiaryContract.Request {
 
     private DatabaseReference mRef;
 
+    private boolean isPublic;
+
     public WriteDiaryRequest() {
         mRef = FirebaseDatabase.getInstance().getReference().child(Constants.REF_DIARY);
     }
 
-    public void requestWriteDiary(final Diary diary, boolean isPublic, Activity activity, DatabaseReference.CompletionListener listener) {
+    @Override
+    public void requestWriteDiary(final Diary diary, Activity activity, DatabaseReference.CompletionListener listener) {
 
         if (TextUtils.isEmpty(diary.getUid())) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -50,11 +53,18 @@ public class WriteDiaryRequest implements WriteDiaryContract.Request {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/" + diary.getUid() + "/" + DateUtils.getDate(diary.getDate()) + "/" + key, diaryValues);
+
         if (isPublic) {
             diary.setType(Constants.TYPE_ALL);
             diaryValues = diary.toMap();
             childUpdates.put("/all/" + DateUtils.getDate(diary.getDate()) + "/" + key, diaryValues);
         }
+
         mRef.updateChildren(childUpdates, listener);
+    }
+
+    @Override
+    public void setIsPublic(boolean isPublic) {
+        this.isPublic = isPublic;
     }
 }

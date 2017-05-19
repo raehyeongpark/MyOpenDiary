@@ -9,4 +9,7 @@
     <string name="btn_modify_diary">modify diary</string>
     <string name="toast_diary_modify_success">일기를 수정하였습니다.</string>
     <string name="toast_diary_delete_success">일기를 삭제하였습니다.</string>
+    <string name="checkbox_is_public_post">공개여부</string>
+    <string name="msg_success_write_diary">일기를 등록하였습니다.</string>
+    <string name="write_diary">write diary</string>
 </resources>

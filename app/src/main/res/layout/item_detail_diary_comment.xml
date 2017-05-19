@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -14,29 +15,20 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin">
 
         <TextView
             android:id="@+id/tv_msg"
             style="@style/Base.TextAppearance.AppCompat.Body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/btn_delete"
-            android:layout_alignTop="@+id/btn_delete"
-            android:layout_alignWithParentIfMissing="true"
-            android:layout_below="@+id/tv_title"
-            android:layout_toLeftOf="@+id/btn_delete"
-            android:text="@{viewModel.commentMsg}" />
-
-        <ImageButton
-            android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:src="@android:drawable/ic_delete"
-            android:onClick="@{(view) -> viewModel.clickDeleteComment(context)}"
-            android:visibility="@{viewModel.showDeleteBtn ? View.VISIBLE : View.GONE}" />
+            android:layout_alignWithParentIfMissing="true"
+            android:background="@{viewModel.isCommentWrittenByMe ? @drawable/bg_my_comment : @drawable/bg_comment}"
+            android:padding="@dimen/activity_vertical_margin"
+            android:text="@{viewModel.commentMsg}"
+            app:setLayoutGravity="@{viewModel.isCommentWrittenByMe}" />
 
     </RelativeLayout>
 
