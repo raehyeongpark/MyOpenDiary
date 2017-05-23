@@ -28,6 +28,14 @@ public class DetailDiaryCommentModel implements DetailDiaryCommentContract.Model
     }
 
     @Override
+    public void setCommentMsg(String commentMsg) {
+        if (comment != null) {
+            comment.setMsg(commentMsg);
+            comment.setDate(System.currentTimeMillis());
+        }
+    }
+
+    @Override
     public void requestModifyComment(Activity activity, OnCompleteListener<Void> listener) {
         reference.setValue(comment).addOnCompleteListener(activity, listener);
     }

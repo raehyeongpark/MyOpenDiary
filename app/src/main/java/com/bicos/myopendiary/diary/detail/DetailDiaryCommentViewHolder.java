@@ -1,8 +1,14 @@
 package com.bicos.myopendiary.diary.detail;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.widget.Toast;
 
+import com.bicos.myopendiary.R;
+import com.bicos.myopendiary.databinding.DialogEditDialogBinding;
 import com.bicos.myopendiary.databinding.ItemDetailDiaryCommentBinding;
 import com.bicos.myopendiary.diary.data.Comment;
 
@@ -37,5 +43,20 @@ public class DetailDiaryCommentViewHolder extends RecyclerView.ViewHolder implem
     @Override
     public void setUiFailure(Exception e) {
         Toast.makeText(itemView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showEditCommentDialog(DialogInterface.OnClickListener onClickListener) {
+
+        DialogEditDialogBinding binding = DataBindingUtil.inflate(LayoutInflater.from(itemView.getContext()),
+                R.layout.dialog_edit_dialog,null, false);
+        binding.setViewModel(viewModel);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext())
+                .setView(binding.getRoot())
+                .setPositiveButton("수정", onClickListener)
+                .setNegativeButton("취소", null);
+        builder.create().show();
+
     }
 }

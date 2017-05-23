@@ -28,7 +28,8 @@
             android:background="@{viewModel.isCommentWrittenByMe ? @drawable/bg_my_comment : @drawable/bg_comment}"
             android:padding="@dimen/activity_vertical_margin"
             android:text="@{viewModel.commentMsg}"
-            app:setLayoutGravity="@{viewModel.isCommentWrittenByMe}" />
+            app:setLayoutGravity="@{viewModel.isCommentWrittenByMe}"
+            android:onLongClick="@{(view) -> viewModel.longClickComment(view)}"/>
 
     </RelativeLayout>
 

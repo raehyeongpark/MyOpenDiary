@@ -1,6 +1,7 @@
 package com.bicos.myopendiary.diary.detail;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 
 import com.bicos.myopendiary.diary.data.Comment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,11 +19,15 @@ public class DetailDiaryCommentContract {
         void setUiSuccessDeleteComment();
 
         void setUiFailure(Exception e);
+
+        void showEditCommentDialog(DialogInterface.OnClickListener onClickListener);
     }
 
     public interface Model {
 
         void setComment(Comment comment);
+
+        void setCommentMsg(String commentMsg);
 
         void requestModifyComment(Activity activity, OnCompleteListener<Void> listener);
 
