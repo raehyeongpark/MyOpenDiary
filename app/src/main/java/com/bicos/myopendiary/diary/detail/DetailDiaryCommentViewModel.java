@@ -75,9 +75,9 @@ public class DetailDiaryCommentViewModel extends BaseObservable {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            DetailDiaryCommentViewModel.this.view.setUiSuccessModifyComment();
+                            view.setUiSuccessModifyComment();
                         } else {
-                            DetailDiaryCommentViewModel.this.view.setUiFailure(task.getException());
+                            view.setUiFailure(task.getException());
                         }
                     }
                 });

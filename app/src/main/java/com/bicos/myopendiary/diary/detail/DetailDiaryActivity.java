@@ -8,17 +8,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.bicos.myopendiary.R;
 import com.bicos.myopendiary.databinding.ActivityDetailDiaryBinding;
-import com.bicos.myopendiary.diary.modify.ModifyDiaryActivity;
 import com.bicos.myopendiary.diary.data.Diary;
+import com.bicos.myopendiary.diary.modify.ModifyDiaryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -59,6 +57,12 @@ public class DetailDiaryActivity extends AppCompatActivity implements DetailDiar
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_detail_diary);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onDestroy() {
+        viewModel.cleanUp();
+        super.onDestroy();
     }
 
     @Override

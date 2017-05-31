@@ -51,5 +51,7 @@ public class DetailDiaryContract {
         void requestWriteComment(Activity activity, OnCompleteListener<Void> listener);
 
         List<Comment> getCommentList();
+
+        void cleanUp();
     }
 }

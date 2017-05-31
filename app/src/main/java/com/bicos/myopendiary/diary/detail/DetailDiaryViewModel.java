@@ -156,4 +156,8 @@ public class DetailDiaryViewModel extends BaseObservable {
             recyclerView.setAdapter(adapter);
         }
     }
+
+    public void cleanUp() {
+        mRequest.cleanUp();
+    }
 }

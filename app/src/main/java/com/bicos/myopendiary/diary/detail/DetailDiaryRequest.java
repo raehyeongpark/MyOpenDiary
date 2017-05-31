@@ -39,6 +39,10 @@ public class DetailDiaryRequest implements DetailDiaryContract.Request {
 
     private String mWriteComment;
 
+    private ValueEventListener diaryListener;
+
+    private ValueEventListener commentListener;
+
     public DetailDiaryRequest() {
         mCommentList = new ArrayList<>();
     }
@@ -52,11 +56,14 @@ public class DetailDiaryRequest implements DetailDiaryContract.Request {
                 .child(Constants.TYPE_ALL.equals(diary.getType()) ? Constants.TYPE_ALL : diary.getUid())
                 .child(DateUtils.getDate(mDiary.getDate()))
                 .child(mKey);
-        mRef.addValueEventListener(diaryListener);
+
+        this.diaryListener = diaryListener;
+        mRef.addValueEventListener(this.diaryListener);
 
         if (!TextUtils.isEmpty(mDiary.getCommentKey())){
+            this.commentListener = commentListener;
             mCommentRef = FirebaseWrapper.getCommentReference(mDiary.getCommentKey());
-            mCommentRef.addValueEventListener(commentListener);
+            mCommentRef.addValueEventListener(this.commentListener);
         }
     }
 
@@ -119,6 +126,16 @@ public class DetailDiaryRequest implements DetailDiaryContract.Request {
     @Override
     public List<Comment> getCommentList() {
         return mCommentList;
+    }
+
+    @Override
+    public void cleanUp() {
+        if (mRef != null) {
+            mRef.removeEventListener(diaryListener);
+        }
+        if (mCommentRef != null) {
+            mCommentRef.removeEventListener(commentListener);
+        }
     }
 
     @Override
